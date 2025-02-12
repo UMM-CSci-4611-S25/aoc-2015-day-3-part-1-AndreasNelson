@@ -3,33 +3,71 @@ fn main() {
     let contents = std::fs::read_to_string(input_file_name).expect("Failed to read the input file");
     println!("{}", contents.len());
 }
+// different ways to implement 
+// (i32, i32)
+// type Pos = (i32, i32);
+// pub struct Pos(i32, i32);
+
+#[derive(PartialEq, Eq, Debug)]
+pub struct Pos {
+    x: i32,
+    y: i32,
+}
+
+pub struct VisitedHouses {
+    visited_houses: HashSet<Pos>,
+    current_position: Pos,
+}
+
+impl VisitedHouses {
+    pub fn new() -> VisitedHouses {
+        VisitedHouses {
+            visited_houses: todo!(),
+            current_position: Pos{x:0, y:0},
+        }
+    }
+
+    pub fn num_visited_houses(&self) -> i32 {
+    1
+    }
+
+    pub fn current_pos(&self) -> Pos {
+        self.current_position
+    }
+}
+
+impl Default for VisitedHouses {
+    fn default() -> Self {
+        VisitedHouses::new()
+    }
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    // #[test]
-    // fn test_visited_houses_new() {
-    //     let mut visited_houses = VisitedHouses::new();
-    //     assert_eq!(visited_houses.num_visited_houses(), 1);
-    //     assert_eq!(visited_houses.current_pos, Pos(0, 0));
-    // }
+     #[test]
+     fn test_visited_houses_new() {
+         let visited_houses = VisitedHouses::new();
+         assert_eq!(visited_houses.num_visited_houses(), 1);
+         assert_eq!(visited_houses.current_pos(), Pos{x:0, y:0});
+    }
 
-    // #[test]
-    // fn test_direction_try_from() {
-    //     assert_eq!('^'.try_into(), Ok(Direction::North));
-    //     assert_eq!('v'.try_into(), Ok(Direction::South));
-    //     assert_eq!('<'.try_into(), Ok(Direction::West));
-    //     assert_eq!('>'.try_into(), Ok(Direction::East));
-    //     assert_eq!('x'.try_into(), Err(IllegalDirectionCharacter('x')));
-    // }
+     #[test]
+     fn test_direction_try_from() {
+         assert_eq!('^'.try_into(), Ok(Direction::North));
+         assert_eq!('v'.try_into(), Ok(Direction::South));
+         assert_eq!('<'.try_into(), Ok(Direction::West));
+         assert_eq!('>'.try_into(), Ok(Direction::East));
+         assert_eq!('x'.try_into(), Err(IllegalDirectionCharacter('x')));
+    }
 
     // #[test]
     // fn test_move_east() {
     //     let mut visited_houses = VisitedHouses::new();
     //     visited_houses.perform_move(Direction::East);
     //     assert_eq!(visited_houses.num_visited_houses(), 2);
-    //     assert_eq!(visited_houses.current_pos, Pos(1, 0));
+    //     assert_eq!(visited_houses.current_pos(), Pos(1, 0));
     // }
 
     // #[test]
@@ -38,7 +76,7 @@ mod tests {
     //     let moves = Moves::from_str("^>v<").unwrap();
     //     visited_houses.perform_moves(moves);
     //     assert_eq!(visited_houses.num_visited_houses(), 4);
-    //     assert_eq!(visited_houses.current_pos, Pos(0, 0));
+    //     assert_eq!(visited_houses.current_pos(), Pos(0, 0));
     // }
 
     // #[test]
@@ -47,7 +85,7 @@ mod tests {
     //     let moves = Moves::from_str("^v^v^v^v^v").unwrap();
     //     visited_houses.perform_moves(moves);
     //     assert_eq!(visited_houses.num_visited_houses(), 2);
-    //     assert_eq!(visited_houses.current_pos, Pos(0, 0));
+    //     assert_eq!(visited_houses.current_pos(), Pos(0, 0));
     // }
 
     // #[test]
